@@ -38,12 +38,12 @@
 ---
 
 - get all albums released today or before but not after today
-  Album.objects.all().filter(release_datetime\_\_lte=timezone.now())
+  Albums.objects.all().filter(release_datetime\_\_lte=timezone.now())
 
 ---
 
 - count the total number of albums
-  Album.objects.count()
+  Albums.objects.count()
 
 ---
 
