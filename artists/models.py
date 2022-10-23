@@ -9,5 +9,5 @@ class Artists(models.Model):
         return(f" Name: "+self.stageName+f" Link: "+self.socialLinkField)
     def numberOfApprovedAlbums(self):
         return self.albums_set.filter(isApproved=True).count()
-  # NumberOfApproved = numberOfApprovedAlbums(Albums)
+
 
