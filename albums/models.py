@@ -4,9 +4,8 @@ from model_utils.models import TimeStampedModel
 
 # Create your models here.
 class Albums(TimeStampedModel) :
-    Name = models.CharField(max_length = 50,default ="New")
-    #creationDateTime = models.DateTimeField()
-    releaseDateTime = models.DateTimeField(blank = False)
+    Name = models.CharField(max_length = 50,default ="New",null= False,blank= False)
+    releaseDateTime = models.DateTimeField(blank = False,null= False)
     cost = models.DecimalField(decimal_places= 4,max_digits=5)
     Artists = models.ForeignKey(Artists, on_delete = models.CASCADE)
     isApproved = models.BooleanField(default=True, help_text='Approve the album if its name is not explicit')
