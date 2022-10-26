@@ -9,5 +9,5 @@ from . import models
 
 @admin.register(models.Artists)
 class ArtistAdmin(admin.ModelAdmin):
-    inlines = [AlbumsInline]
+   # inlines = [AlbumsInline]
     list_display = ['stageName', 'socialLinkField','numberOfApprovedAlbums'] 
