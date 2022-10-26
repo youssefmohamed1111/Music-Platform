@@ -1,0 +1,12 @@
+<body style="background-color: black">
+  <h1 style="color: white">Albums Form</h1>
+  <br />
+  <form action="" method="post">
+    {%csrf_token%}
+    <div style="color: red">{{form.errors}}</div>
+    {% for i in form %}
+    <div style="color: white; margin: 10px">{{i.label_tag}} {{i}}</div>
+    {% endfor %}
+    <input type="submit" />
+  </form>
+</body>
