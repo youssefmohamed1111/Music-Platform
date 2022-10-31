@@ -1,5 +1,6 @@
 from django.db import models
 from artists.models import Artists
+from django import forms
 from model_utils.models import TimeStampedModel
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
@@ -28,16 +29,19 @@ class Songs(models.Model):
     Audio = models.FileField(blank=False, upload_to="audio/", validators=[
                              FileExtensionValidator(allowed_extensions=['mp3', 'wav'])])
     def __str__(self):
-        return (f"name = {self.Name} || image = {self.Image} || image_thumbnail = {self.image_thumbnail} || audio = {self.Audio}")
+        return (f"Album = {self.Albums.Name}  Name = {self.Name}  Image = {self.Image}  Image_Thumbnail = {self.image_thumbnail}  Audio = {self.Audio}")
     def save(self, *args, **kwargs):
-        self.Name = self.Albums.Name
-        super(Songs, self).save(*args, **kwargs)
+        if self.Name == "":
+            self.Name = self.Albums.Name
+        return super(Songs, self).save(*args, **kwargs)
     def delete(self, *args, **kwargs):
-        if (self.Albums.song_set.all().count() >= 2):
+        if (self.Albums.songs_set.all().count() > 1):
             super(Songs, self).delete(*args, **kwargs)
         else:
             raise forms.ValidationError(
                 " There must be atleast one song in the album.")
+
+ 
     
 
 
