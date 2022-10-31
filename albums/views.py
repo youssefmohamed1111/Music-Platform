@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from .forms import AlbumsForm
 from django.views import View
+from django.contrib.auth.decorators import login_required
+
 
 #Create your views here.
-
+#@login_required(login_url='') 
 class create(View):
     form_class = AlbumsForm
     init ={'init':'init'}

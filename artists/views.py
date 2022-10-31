@@ -2,10 +2,13 @@ from django.shortcuts import render
 from .forms import ArtistsForm
 from .models import Artists
 from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
-class create(View):
+class create(LoginRequiredMixin,View):
     form_class = ArtistsForm
+    login_url =''
+    redirect_field_name =''
     init ={'init':'init'}
     templateName ='CreateArtists.html'
     def get(self,request):

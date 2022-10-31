@@ -18,16 +18,26 @@ class Albums(TimeStampedModel) :
 
 class Songs(models.Model):
     Albums = models.ForeignKey(Albums, on_delete=models.CASCADE)
-    Name = models.CharField(max_length = 50,default ="Albums.Name")
-    Image = models.ImageField(blank = False)
+    Name = models.CharField(max_length = 50,blank= True)
+    Image = models.ImageField()
     image_thumbnail= ImageSpecField(source='Image',
                                       processors=[ResizeToFill(100, 50)],
                                       format='JPEG',
                                       options={'quality': 60})
+    #Thumbnail is useful because it gives the singer an opportunity to show  off of his album's theme in one picture
     Audio = models.FileField(blank=False, upload_to="audio/", validators=[
                              FileExtensionValidator(allowed_extensions=['mp3', 'wav'])])
     def __str__(self):
-        return(f" name: "+self.Name+" Image "+self.Image + "Image Thumbnail" + self.image_thumbnail + "Audio " + self.Audio)
+        return (f"name = {self.Name} || image = {self.Image} || image_thumbnail = {self.image_thumbnail} || audio = {self.Audio}")
+    def save(self, *args, **kwargs):
+        self.Name = self.Albums.Name
+        super(Songs, self).save(*args, **kwargs)
+    def delete(self, *args, **kwargs):
+        if (self.Albums.song_set.all().count() >= 2):
+            super(Songs, self).delete(*args, **kwargs)
+        else:
+            raise forms.ValidationError(
+                " There must be atleast one song in the album.")
     
 
 
