@@ -1,0 +1,16 @@
+{% block content %}
+<body style="background-color: black">
+  <h1 style="color: whitesmoke">Login</h1>
+  <hr />
+  <form action="" method="POST">
+    {% csrf_token %}
+    <label style="color: whitesmoke; margin: 10px">Username</label>
+    <input type="text" name="username" />
+    <br />
+    <label style="color: whitesmoke; margin: 10px">Password</label>
+    <input type="password" name="password" />
+    <br />
+    <button type="submit">Login</button>
+  </form>
+</body>
+{% endblock %}
