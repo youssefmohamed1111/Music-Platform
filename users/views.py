@@ -1,22 +1,36 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.views import View
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.views import APIView
+from .serializers import UserSerializer
+from .models import User
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
-class Login(View):
-    templateName ='login.html'
-    init ={'init':'init'}
-    def get(self,request):
-        return render(request,self.templateName,{})
-    def post(self,request):
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request,username = username,password = password)
-        if user is not None:
-            login(request,user)
-            return redirect('/artists/create')
-        else:
-            messages.info(request, 'Invalid Credentials')
-            return redirect('/artists/')
-
+class UserDetails (APIView):
+    authentication_classes = [TokenAuthentication] 
+    permission_classes = [IsAuthenticated]
+    def get(self, request, pk):
+        user = get_object_or_404(User, id=pk)
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+  
+    def put(self, request, pk):
+        user = get_object_or_404(User, id=pk)
+        serializer = UserSerializer(user, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+  
+    def patch(self, request, pk):
+        user = get_object_or_404(User, id=pk)
+        serializer = UserSerializer(user,data=request.data,partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

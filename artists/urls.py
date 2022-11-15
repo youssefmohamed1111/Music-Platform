@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 
 
 urlpatterns = [
-   path("create/", login_required(views.create.as_view())),
+   path("create/", views.create.as_view()),
     #path("", views.List.as_view()),
      path("", views.ArtistsList.as_view()),
 ]
