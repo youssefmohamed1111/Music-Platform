@@ -7,7 +7,7 @@ from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
-class create(LoginRequiredMixin,View):
+class create(View):
     form_class = ArtistsForm
     init ={'init':'init'}
     templateName ='CreateArtists.html'
