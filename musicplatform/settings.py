@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'albums','musicplatform','artists',
     'users',
-    'imagekit','rest_framework','authentication','knox'
+    'imagekit','rest_framework','authentication','knox',
+    "rest_framework.authtoken"
 ]
 AUTH_USER_MODEL = 'users.User'
 MIDDLEWARE = [
